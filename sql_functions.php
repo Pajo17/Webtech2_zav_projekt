@@ -1,0 +1,80 @@
+<?php
+
+
+//pripoji DB
+function connectDB(){
+    require 'config.php';
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    mysqli_set_charset($conn,"utf8");
+    return $conn;
+}
+
+//selectnem si loginy z DB
+function getLogginns($email,$pass){
+    $conn = connectDB();
+    $sql = "SELECT Email, Heslo, administrator, aktivna FROM `uzivatel` WHERE Email = '$email' AND Heslo = '$pass'";
+    //echo $sql;
+    $result =  $conn->query($sql);
+    $conn->close();
+    $a =$result->fetch_assoc();
+    return $a;
+}
+
+
+$start_lat = $_GET['start_lat'];
+$start_lng = $_GET['start_lng'];
+$end_lat = $_GET['end_lat'];
+$end_lng = $_GET['end_lng'];
+$mode = $_GET['mode'];
+if(isset($start_lat)&&isset($start_lng)&&isset($mode)&&isset($end_lat)&&isset($end_lng)){
+    addRoute($start_lat,$start_lng,$end_lat,$end_lng,$mode);
+}
+
+function addRoute($start_lat,$start_lng,$end_lat,$end_lng,$mode){
+    $conn = connectDB();
+    session_start();
+    $define = $_SESSION['email'];
+    $sql= "INSERT INTO `celkova_trasa` (`id`, `Start_lan`, `Start_lng`, `End_lan`, `End_lng`, `mode`, `Definoval`) 
+                                VALUES (NULL, '$start_lat', '$start_lng', '$end_lat', '$end_lng', '$mode', '$define')";
+
+    $conn->query($sql);
+    $conn->close();
+    header( "Location: http://147.175.98.193/zav/index.php" );
+
+}
+//vyhladaj vsetky verejne cesty
+function getPublicRoute(){
+    $conn = connectDB();
+    $sql = "SELECT * FROM `celkova_trasa` WHERE `mode` = 'public'";
+    //echo $sql;
+    $result =  $conn->query($sql);
+    $conn->close();
+
+    return $result;
+}
+// vyhladaj privatne cesty
+function getPrivateRoute($admin){
+    $conn = connectDB();
+    $def = $_SESSION['email'];
+    if($admin==0) {$sql = "SELECT * FROM `celkova_trasa` WHERE `mode` = 'private' and 	Definoval = '$def'";}
+    else    {$sql = "SELECT * FROM `celkova_trasa` WHERE `mode` = 'private'";}
+    //echo $sql;
+    $result =  $conn->query($sql);
+    $conn->close();
+
+    return $result;
+}
+//vyhladaj aktivnu cestu
+function getActiveRoute(){
+    $conn = connectDB();
+    $def = $_SESSION['email'];
+    $sql = "select * from uzivatel LEFT join celkova_trasa on uzivatel.aktivna = celkova_trasa.id where uzivatel.Email = '$def'";
+    $result =  $conn->query($sql);
+    $conn->close();
+    return $result;
+}
+
+?>

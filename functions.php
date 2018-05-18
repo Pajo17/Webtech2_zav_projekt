@@ -1,11 +1,6 @@
 
 <?php
-/**
- * Created by PhpStorm.
- * User: Uzivatel
- * Date: 16. 5. 2018
- * Time: 12:30
- */
+
 session_start();
 
 require_once 'sql_functions.php';
@@ -45,29 +40,6 @@ function odhlas(){
 }
 
 
-/*
-function showRoute(){
-    echo"    <script>
-                var directionsDisplay;
-                var directionsService = new google.maps.DirectionsService();
-                directionsDisplay = new google.maps.DirectionsRenderer();
-                directionsDisplay.setMap(map);
-";
-    $resoult = getPublicRoute();
-    while($row = $resoult->fetch_assoc()){
-        echo "
-                   var start = new google.maps.LatLng(".$row['Start_lan'].", ".$row['Start_lng'].");
-                    var end = new google.maps.LatLng(".$row['End_lan'].", ".$row['End_lng'].");
-                    calcRoute(directionsDisplay,directionsService,start,end);
-                    </script>
-        ";
 
-    }
-
-
-
-
-}
-*/
 
 ?>

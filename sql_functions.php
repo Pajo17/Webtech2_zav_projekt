@@ -77,4 +77,46 @@ function getActiveRoute(){
     return $result;
 }
 
+//pridaj email na odoberanie aktualit
+function insertNewsletterEmail($email){
+    $conn = connectDB();
+    $sql = "INSERT INTO `newsletter_email` (`id`, `email`) VALUES (NULL, '$email')";
+    $conn->query($sql);
+    $conn->close();
+}
+//zmaz email na odoberanie aktualit
+function deleteNewsletterEmail($email){
+    $conn = connectDB();
+    $sql = "DELETE FROM newsletter_email WHERE email = 'pksdadjod@gmais.com'";
+    $conn->query($sql);
+    $conn->close();
+}
+
+//ziskaj aktuality
+function getAktuality(){
+    $conn = connectDB();
+    $sql = "SELECT * FROM `aktuality` WHERE 1";
+    $result =  $conn->query($sql);
+    $conn->close();
+    return $result;
+}
+
+//pridaj aktualitu
+function insertAktuality($act){
+    $conn = connectDB();
+    $date = date("Y/m/d");
+    $sql = "INSERT INTO `aktuality` (`id`, `datum`, `text`) VALUES (NULL, '$date', '$act')";
+
+    $conn->query($sql);
+    $conn->close();
+}
+
+function getNewsLetterEmail()
+{
+    $conn = connectDB();
+    $sql = "SELECT `email` FROM `newsletter_email`";
+    $result = $conn->query($sql);
+    $conn->close();
+    return $result;
+}
 ?>

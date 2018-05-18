@@ -57,6 +57,7 @@ if(isset($akt)){
 }
 function changeAktiveRoute($akt){
     zmenAktivnuTrasu($akt);
+    $_SESSION['id_trasa'] = $akt; 
     header( "Location: http://147.175.98.193/zav/index.php" );
 }
 

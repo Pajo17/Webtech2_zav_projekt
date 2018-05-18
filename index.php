@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <?php
 session_start();
@@ -48,6 +48,9 @@ require_once 'mapa.php';
         <li class="nav-item">
             <a class="nav-link" href="#">About</a>
         </li>
+        <li>
+          <a class="nav-link" href="detaily.php">Detaily</a>
+        </li>
     </ul>
     <?php
     if(isset($_SESSION['email'])){
@@ -70,8 +73,6 @@ require_once 'mapa.php';
 <!-- PAGE BODY - GOOGLE MAP -->
 <div class="jumbotron text-center" id="map" style="height: 84vh; margin-bottom: 0;"></div>
 
-<!-- ulohy 8,9,10  -->
-<?php include("osma.php");?>
 
 <!-- LOGIN FORM MODAL Bootstrap -->
 <div class="modal" id="myModal">

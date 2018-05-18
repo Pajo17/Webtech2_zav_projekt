@@ -15,7 +15,7 @@ function connectDB(){
 //selectnem si loginy z DB
 function getLogginns($email,$pass){
     $conn = connectDB();
-    $sql = "SELECT Email, Heslo, administrator, aktivna FROM `uzivatel` WHERE Email = '$email' AND Heslo = '$pass'";
+    $sql = "SELECT id, Email, Heslo, administrator, aktivna FROM `uzivatel` WHERE Email = '$email' AND Heslo = '$pass'";
     //echo $sql;
     $result =  $conn->query($sql);
     $conn->close();
@@ -37,7 +37,7 @@ function addRoute($start_lat,$start_lng,$end_lat,$end_lng,$mode){
     $conn = connectDB();
     session_start();
     $define = $_SESSION['email'];
-    $sql= "INSERT INTO `celkova_trasa` (`id`, `Start_lan`, `Start_lng`, `End_lan`, `End_lng`, `mode`, `Definoval`) 
+    $sql= "INSERT INTO `celkova_trasa` (`id`, `Start_lan`, `Start_lng`, `End_lan`, `End_lng`, `mode`, `Definoval`)
                                 VALUES (NULL, '$start_lat', '$start_lng', '$end_lat', '$end_lng', '$mode', '$define')";
 
     $conn->query($sql);

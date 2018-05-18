@@ -21,6 +21,11 @@ function loggin($email,$pass){
         $_SESSION['email'] = $respond['Email'];
         $_SESSION['aktivna'] = $respond['aktivna'];
         $_SESSION['administrator'] = $respond['administrator'];
+
+        //
+        $_SESSION['id_uzivatel'] = $respond['id'];
+        $_SESSION['id_trasa'] = $respond['aktivna'];
+
         header( "Location: http://147.175.98.193/zav/index.php" );
     }
 
@@ -36,6 +41,11 @@ function odhlas(){
     unset($_SESSION['email']);
     unset($_SESSION['aktivna']);
     unset($_SESSION['administrator']);
+    
+    //
+    unset($_SESSION['id_uzivatel']);
+    unset($_SESSION['id_trasa']);
+
     session_destroy();
     header( "Location: http://147.175.98.193/zav/index.php" );
 }

@@ -40,10 +40,10 @@ require_once 'mapa.php';
         }
         ?>
         <li class="nav-item active">
-            <a class="nav-link" href="http://147.175.98.211/webteSZ/">Home</a>
+            <a class="nav-link" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="http://147.175.98.211/webteSZ/registration.php">Registration</a>
+            <a class="nav-link" href="registration.php">Registration</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">About</a>
@@ -69,6 +69,9 @@ require_once 'mapa.php';
 
 <!-- PAGE BODY - GOOGLE MAP -->
 <div class="jumbotron text-center" id="map" style="height: 84vh; margin-bottom: 0;"></div>
+
+<!-- ulohy 8,9,10  -->
+<?php include("osma.php");?>
 
 <!-- LOGIN FORM MODAL Bootstrap -->
 <div class="modal" id="myModal">
@@ -201,8 +204,8 @@ require_once 'mapa.php';
                 </form>
 
                 <?php
-                if($_SESSION['administrator'] ==1){
-                    echo "   <form action=\"news.php\" >                
+                if($_SESSION['administrator'] == 1){
+                    echo "   <form action=\"news.php\" >
                              <div cl    ass=\"form-group\">
                                 <label for=\"pridajAktualitu\">pridaj Aktualitu</label>
                                 <input type=\"text\" class=\"form-control\" id=\"pridajAktualitu\" name=\"pridajAktualitu\">

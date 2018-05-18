@@ -37,8 +37,18 @@ function odhlas(){
     unset($_SESSION['aktivna']);
     unset($_SESSION['administrator']);
     session_destroy();
+    header( "Location: http://147.175.98.193/zav/index.php" );
 }
 
+$akt = $_GET["zvolAktivnuTrasu"];
+if(isset($akt)){
+    changeAktiveRoute($akt);
+
+}
+function changeAktiveRoute($akt){
+    zmenAktivnuTrasu($akt);
+    header( "Location: http://147.175.98.193/zav/index.php" );
+}
 
 
 

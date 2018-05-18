@@ -59,6 +59,9 @@ require_once 'mapa.php';
     </li>";
 
     }
+    echo "<li class=\"nav-item\">
+    	<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#trasyModal\" id = 'zobrazTrasy'>Trasy</button>
+    </li>";
 
     ?>
 
@@ -224,8 +227,94 @@ require_once 'mapa.php';
     </div>
 </div>
 
+<!-- Modal na prezeranie Tras !-->
+<div class="modal fade" id="trasyModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Trasy</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
+            <div class="modal-body">
 
+                    <div class="container">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Štart</th>
+                                <th>Koniec</th>
+                                <th>Mód</th>
+                                <th>Definoval</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            if(isset($_SESSION['email'])) {
+                                if ($_SESSION['administrator'] == 1) {
+                                    $result = getCelkova_trasa(1);
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>" . $row['Start_lan'] . " , " . $row['Start_lng'] . "</td>";
+                                        echo "<td>" . $row['End_lan'] . " , " . $row['End_lng'] . "</td>";
+                                        echo "<td>" . $row['mode'] . "</td>";
+                                        echo "<td>" . $row['Definoval'] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                }else{
+                                    $result = getCelkova_trasaPrivatna();
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>" . $row['Start_lan'] . " , " . $row['Start_lng'] . "</td>";
+                                        echo "<td>" . $row['End_lan'] . " , " . $row['End_lng'] . "</td>";
+                                        echo "<td>" . $row['mode'] . "</td>";
+                                        echo "<td>" . $row['Definoval'] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                }
+                            }else{
+                            $result = getCelkova_trasa(0);
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row['Start_lan'] . " , " . $row['Start_lng'] . "</td>";
+                                echo "<td>" . $row['End_lan'] . " , " . $row['End_lng'] . "</td>";
+                                echo "<td>" . $row['mode'] . "</td>";
+                                echo "<td>" . $row['Definoval'] . "</td>";
+                                echo "</tr>";
+                            }
+
+                            }
+                            ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                <?php
+                if(isset($_SESSION['email'])){
+                    if ($_SESSION['administrator'] == 1){
+                        $result = getCelkova_trasa(1);
+                        echo "<form action=\"functions.php\"><div class=\"form-group\"> <label for=\"zvolAktivnuTrasu\">Zmeň Aktívnu Trasu</label> </div><select id = \"zvolAktivnuTrasu\" onchange=\"this.form.submit()\" name= \"zvolAktivnuTrasu\" class=\"form-control\">";
+                            $result = getCelkova_trasa(1);
+                                while($row = $result->fetch_assoc()){
+                                    echo "<option value= ".$row['id'].">".$row['Start_lan'] . " , " . $row['Start_lng']." do ".$row['End_lan'] . " , " . $row['End_lng']."</option>";
+                                }
+                                echo"</select></div></form>";
+                    }else{
+                        $result = getCelkova_trasaPrivatna();
+                        echo "<form action=\"functions.php\"><div class=\"form-group\"> </div> <label for=\"zvolAktivnuTrasu\">Zmeň Aktívnu Trasu</label> <select id = \"zvolAktivnuTrasu\" onchange=\"this.form.submit()\" name= \"zvolAktivnuTrasu\" class=\"form-control\">";
+                        $result = getCelkova_trasa(1);
+                        while($row = $result->fetch_assoc()){
+                            echo "<option value= ".$row['id'].">".$row['Start_lan'] . " , " . $row['Start_lng']." do ".$row['End_lan'] . " , " . $row['End_lng']."</option>";
+                        }
+                        echo"</select></div></form>";
+                    }
+                }
+                ?>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

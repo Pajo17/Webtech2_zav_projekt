@@ -120,7 +120,6 @@ function insertAktuality($act){
     $conn->query($sql);
     $conn->close();
 }
-
 function getNewsLetterEmail()
 {
     $conn = connectDB();
@@ -129,4 +128,39 @@ function getNewsLetterEmail()
     $conn->close();
     return $result;
 }
+//ziskaj vsetky trasy
+function getCelkova_trasa($acess){
+    $conn = connectDB();
+
+    $sql=1;
+    if($acess==1){
+        $sql = "SELECT * FROM `celkova_trasa`";
+    }elseif($acess==0){
+        $sql = "SELECT * FROM `celkova_trasa` WHERE `mode`='public'";
+    }
+    $result = $conn->query($sql);
+    $conn->close();
+    return $result;
+}
+//ziskaj privatnu trasu uzivatela
+function getCelkova_trasaPrivatna(){
+    $conn = connectDB();
+    $email = $_SESSION['email'];
+    $sql = "SELECT * FROM `celkova_trasa` WHERE `mode` ='public' OR `Definoval` = '$email'";
+    $result = $conn->query($sql);
+    $conn->close();
+    return $result;
+}
+
+
+function zmenAktivnuTrasu($akt){
+    $conn = connectDB();
+    $email = $_SESSION['email'];
+    $sql = "UPDATE `uzivatel` SET `aktivna` = '$akt' WHERE `uzivatel`.`Email` = '$email'";
+    $result = $conn->query($sql);
+    $conn->close();
+
+}
+
+
 ?>

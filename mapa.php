@@ -19,7 +19,10 @@ function initMap() {
     <?php
     session_start();
     if(isset($_SESSION['email'])){
-        $resoult = getActiveRoute();
+    $resoult = checkAktiveRoad();
+        if(!(empty($resoult))){
+            $resoult = getActiveRoute();
+
         while($row = $resoult->fetch_assoc()){
             echo "
                             var directionsDisplay;
@@ -39,6 +42,7 @@ function initMap() {
 
         }
 
+    }
     }
 
 

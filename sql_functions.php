@@ -67,6 +67,16 @@ function getPrivateRoute($admin){
 
     return $result;
 }
+function checkAktiveRoad(){
+    $conn = connectDB();
+    $def = $_SESSION['email'];
+    $sql = "SELECT `aktivna` FROM `uzivatel` WHERE `Email` = '$def'";
+    $result =  $conn->query($sql);
+    $conn->close();
+    $a = $result->fetch_assoc();
+    return $a['aktivna'];
+}
+
 //vyhladaj aktivnu cestu
 function getActiveRoute(){
     $conn = connectDB();
